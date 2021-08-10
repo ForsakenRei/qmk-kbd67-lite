@@ -18,6 +18,7 @@
 enum custom_keycodes
 {
   TSK_MGR,
+  CTL_APP,
 };
 
 typedef enum
@@ -51,34 +52,55 @@ void ql_reset(qk_tap_dance_state_t *state, void *user_data);
 
 #define CAP_LYR TD(CAPS_LAYR)
 #define TSK_MGR C(S(KC_ESC))
-#define OSK_ALT OSM(MOD_LALT) // one shot mods
-#define OSK_SFT OSM(MOD_RSFT)
+#define CTL_APP CTL_T(KC_APP)
+
 
 enum {
       _L0 = 0,
       _L1,
-      _L2
+      _L2,
+      _L3,
 };
+
+	/* 
+  * ,--------------------------------------------------------------------------------------------------.
+  * | Esc |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  0  |  -  |  =  |  Backspace  | `    |
+  * |-------------------------------------------------------------------------------------------+------+
+  * | Tab    |  Q  |  W  |  E  |  R  |  T  |  Y  |  U  |  I  |  O  |  P  |  [  |  ]  |    \     | Del  |
+  * |-------------------------------------------------------------------------------------------+------+
+  * | KC_CAPS  |  A  |  S  |  D  |  F  |  G  |  H  |  J  |  K  |  L  |  ;  |  '  |     Enter    | PgUp |
+  * |-------------------------------------------------------------------------------------------+------+
+  * | Shift      |  Z  |  X  |  C  |  V  |  B  |  N  |  M  |  ,  |  .  |  /  |   Shift    | Up  | PgDn |
+  * +-------------------------------------------------------------------------┬---┬-------------+------+
+  * | LCtrl | LAlt | LGUI |               Space                 | RGUI | RAlt |   | Left  | Dn  | Rght |
+  * `-------------------------------------------------------------------------┘   └-------------+------´
+  */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_L0] = LAYOUT_65_ansi_blocker( /* Base Layer */
-                                       KC_ESC,  KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,   KC_HOME,
-                                       KC_TAB,  KC_Q,     KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLASH, KC_PGUP,
-                                       CAP_LYR, KC_A,     KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,            KC_ENT,    KC_PGDN,
-                                       KC_LSFT, KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,            KC_RSFT,  KC_UP,     KC_END,
-                                       KC_LCTL, KC_LGUI,  KC_LALT,                   KC_SPC,                    TT(2),            KC_RCTL,            KC_LEFT,  KC_DOWN,   KC_RGHT),
-    [_L1] = LAYOUT_65_ansi_blocker( /* FN, media*/
-                                       KC_GRV,  KC_F1,    KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,   KC_F12,  KC_DEL,    KC_INS,
-                                       _______, KC_HOME,  KC_UP,   KC_END,  KC_PGUP, _______, _______, _______, _______, _______, _______,  _______,  _______, KC_INS,    KC_PSCR,
-                                       TO(0),   KC_LEFT,  KC_DOWN, KC_RGHT, KC_PGDN, _______, _______, _______, _______, _______, _______,  _______,           _______,   KC_END,
-                                       _______, _______,  _______, KC_CALC, _______, _______, _______, TSK_MGR, _______, _______, _______,            KC_MUTE, KC_VOLU,   KC_MPLY,
-                                       _______, TO(2),    _______,                   _______,                   _______,          _______,            _______, KC_VOLD,   _______),
-    [_L2] = LAYOUT_65_ansi_blocker( /* Numpad, RGB */
-                                       RGB_TOG, RGB_M_P,  _______, _______, NK_TOGG, _______, _______, KC_P7,   KC_P8,   KC_P9,   _______, KC_PMNS,   KC_PPLS, _______,   RGB_SAI,
-                                       _______, _______,  _______, _______, _______, _______, _______, KC_P4,   KC_P5,   KC_P6,   _______, KC_PAST,   KC_PSLS, _______,   RGB_SAD,
-                                       TO(0),   _______,  _______, _______, _______, _______, _______, KC_P1,   KC_P2,   KC_P3,   _______, _______,            _______,   RGB_HUI,
-                                       _______, RESET,    EEP_RST, _______, _______, _______, _______, KC_P0,   KC_P0,   KC_PDOT, KC_NLCK,            _______, RGB_MOD,   RGB_HUD,
-                                       _______, _______,  _______,                   _______,                   TO(0),            RESET,              RGB_VAD, RGB_RMOD,  RGB_VAI)
+                                      KC_ESC,  KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,   KC_HOME,
+                                      KC_TAB,  KC_Q,     KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLASH, KC_PGUP,
+                                      CAP_LYR, KC_A,     KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,            KC_ENT,    KC_PGDN,
+                                      KC_LSFT, KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,            TT(3),    KC_UP,     KC_END,
+                                      KC_LCTL, KC_LGUI,  KC_LALT,                   KC_SPC,                    TT(2),            KC_RCTL,            KC_LEFT,  KC_DOWN,   KC_RGHT),
+    [_L1] = LAYOUT_65_ansi_blocker( /* FN */
+                                      KC_GRV,  KC_F1,    KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,   KC_F12,   KC_DEL,    KC_INS,
+                                      _______, KC_HOME,  KC_UP,   KC_END,  KC_PGUP, _______, _______, _______, _______, _______, _______,  _______,  _______,  _______,   KC_PSCR,
+                                      TO(0),   KC_LEFT,  KC_DOWN, KC_RGHT, KC_PGDN, _______, _______, _______, _______, _______, _______,  _______,            _______,   _______,
+                                      _______, _______,  _______, KC_CALC, _______, _______, _______, TSK_MGR, _______, _______, _______,            _______,  _______,   _______,
+                                      _______, _______,  _______,                   _______,                   _______,          CTL_APP,            _______,  _______,   _______),
+    [_L2] = LAYOUT_65_ansi_blocker( /* Numpad */
+                                      _______, _______,  _______, _______, _______, _______, _______, KC_P7,   KC_P8,   KC_P9,   _______,  KC_PMNS,  KC_PPLS,  _______,   KC_SLEP,
+                                      _______, _______,  KC_UP,   _______, _______, _______, _______, KC_P4,   KC_P5,   KC_P6,   _______,  KC_PAST,  KC_PSLS,  _______,   _______,
+                                      TO(0),   KC_LEFT,  KC_DOWN, KC_RGHT, _______, _______, _______, KC_P1,   KC_P2,   KC_P3,   _______,  _______,            _______,   _______,
+                                      _______, _______,  _______, KC_CALC, _______, _______, _______, KC_P0,   KC_P0,   KC_PDOT, KC_NLCK,            _______,  _______,   _______,
+                                      _______, _______,  _______,                   _______,                   _______,          _______,            _______,  _______,   _______),
+    [_L3] = LAYOUT_65_ansi_blocker( /* Media and RGB */
+                                      RGB_TOG, RGB_M_P,  _______, _______, NK_TOGG, KC_VOLD, KC_VOLU, KC_MPLY, KC_MUTE, _______, _______,  _______,  _______,  _______,   RGB_SAI,
+                                      _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______,  RESET,     RGB_SAD,
+                                      TO(0),   _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,            EEP_RST,   RGB_HUI,
+                                      _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______,            _______,  RGB_MOD,   RGB_HUD,
+                                      _______, _______,  _______,                   _______,                   _______,          _______,            RGB_VAD,  RGB_RMOD,  RGB_VAI)                                     
 };
 
 void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
@@ -93,6 +115,11 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
   case _L2:
     {
       rgb_matrix_set_color(29, 0xff, 0x99, 0x00);
+    }
+    break;
+  case _L3:
+    {
+      rgb_matrix_set_color(43, 0xee, 0x00, 0x77);
     }
     break;
   default:
