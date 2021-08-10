@@ -19,6 +19,7 @@ enum custom_keycodes
 {
   TSK_MGR,
   CTL_APP,
+  RSFT_L3,
 };
 
 typedef enum
@@ -39,6 +40,7 @@ typedef struct
 enum custom_tap_dance
 {
   CAPS_LAYR,
+  RSFT_LAY3,
 };
 
 // Declare the functions to be used with your tap dance key(s)
@@ -53,6 +55,7 @@ void ql_reset(qk_tap_dance_state_t *state, void *user_data);
 #define CAP_LYR TD(CAPS_LAYR)
 #define TSK_MGR C(S(KC_ESC))
 #define CTL_APP CTL_T(KC_APP)
+#define RSFT_L3 TD(RSFT_LAY3)
 
 
 enum {
@@ -81,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       KC_ESC,  KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,   KC_HOME,
                                       KC_TAB,  KC_Q,     KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLASH, KC_PGUP,
                                       CAP_LYR, KC_A,     KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,            KC_ENT,    KC_PGDN,
-                                      KC_LSFT, KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,            TT(3),    KC_UP,     KC_END,
+                                      KC_LSFT, KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,            RSFT_L3,  KC_UP,     KC_END,
                                       KC_LCTL, KC_LGUI,  KC_LALT,                   KC_SPC,                    TT(2),            KC_RCTL,            KC_LEFT,  KC_DOWN,   KC_RGHT),
     [_L1] = LAYOUT_65_ansi_blocker( /* FN */
                                       KC_GRV,  KC_F1,    KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,   KC_F12,   KC_DEL,    KC_INS,
@@ -191,7 +194,9 @@ void ql_reset(qk_tap_dance_state_t *state, void *user_data)
 
 // Associate our tap dance key with its functionality
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [CAPS_LAYR] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, ql_finished, ql_reset, 275)};
+    [CAPS_LAYR] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, ql_finished, ql_reset, 275),
+    [RSFT_LAY3] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_RSFT, _L3)
+};
 
 void keyboard_post_init_user(void)
 {
