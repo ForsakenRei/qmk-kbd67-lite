@@ -23,6 +23,8 @@
     //Always send Escape if Alt is pressed
 #define GRAVE_ESC_CTRL_OVERRIDE
     //Always send Escape if Control is pressed
+#define GRAVE_ESC_SHIFT_OVERRIDE
+    //Always send Escape if Shift is pressed
 
 // tap vs hold time difference
 #define TAPPING_TERM 200
@@ -30,6 +32,3 @@
 // one shot tap settings
 #define ONESHOT_TAP_TAGGLE 5
 #define ONESHOT_TIMEOUT 5000
-
-#define RGB_DISABLE_TIMEOUT 900000 // number of milliseconds to wait until rgb automatically turns off
-#define RGB_DISABLE_WHEN_USB_SUSPENDED 1
