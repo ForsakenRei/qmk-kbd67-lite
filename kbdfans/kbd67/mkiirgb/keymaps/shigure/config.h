@@ -23,7 +23,7 @@
     //Always send Escape if Alt is pressed
 #define GRAVE_ESC_CTRL_OVERRIDE
     //Always send Escape if Control is pressed
-#define GRAVE_ESC_SHIFT_OVERRIDE
+//#define GRAVE_ESC_SHIFT_OVERRIDE
     //Always send Escape if Shift is pressed
 
 // tap vs hold time difference
