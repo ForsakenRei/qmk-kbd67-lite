@@ -30,5 +30,5 @@
 #define TAPPING_TERM 200
 
 // one shot tap settings
-#define ONESHOT_TAP_TAGGLE 5
-#define ONESHOT_TIMEOUT 5000
+#define ONESHOT_TAP_TAGGLE 3
+#define ONESHOT_TIMEOUT 1500
