@@ -1,4 +1,4 @@
-/* Copyright 2019 dnsnrk
+/* Copyright 2022 shigure
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
@@ -141,6 +141,15 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
   }
 }
 
+bool led_update_user(led_t led_state) {
+    if (led_state.caps_lock) {
+        rgb_matrix_set_color(0x00, 0x66, 0xbb);
+    }
+    else {
+        rgb_matrix_sethsv(0, 0, 0);
+    }
+    return true;
+};
 
 // Determine the current tap dance state
 td_state_t cur_dance(qk_tap_dance_state_t *state)
