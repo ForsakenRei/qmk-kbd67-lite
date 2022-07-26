@@ -121,6 +121,16 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
 {
   switch (get_highest_layer(layer_state))
   {
+  case _L0:
+    if (IS_HOST_LED_ON(USB_LED_CAPS_LOCK))
+    {
+        rgb_matrix_set_color(61, 0x00, 0x66, 0xbb);
+      }
+    else
+    {
+      rgb_matrix_sethsv(0, 0, 0);
+    }
+    break;
   case _L1:
     {
       rgb_matrix_set_color_all(0xaa, 0xcc, 0x11);
@@ -140,16 +150,6 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
     break;
   }
 }
-
-bool led_update_user(led_t led_state) {
-    if (led_state.caps_lock) {
-        rgb_matrix_set_color(0x00, 0x66, 0xbb);
-    }
-    else {
-        rgb_matrix_sethsv(0, 0, 0);
-    }
-    return true;
-};
 
 // Determine the current tap dance state
 td_state_t cur_dance(qk_tap_dance_state_t *state)
