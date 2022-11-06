@@ -9,6 +9,7 @@
 
 ### Or use QMK CLI to flash
 `qmk compile -kb kbdfans/kbd67/mkiirgb/v2 -km shigure -j 32`
+
 `qmk flash -kb kbdfans/kbd67/mikkrgb/v2 -km shigure -j 32`
 
 ## V3 PCB Flash Guide
@@ -19,4 +20,4 @@
 4. Eject the board first then unplug the board
 
 ### Or use QMK CLI to flash
-`qmk flash -kb kbdfans/kbd67/mikkrgb/v3 -km shigure -j 32`
+`qmk compile -kb kbdfans/kbd67/mkiirgb/v3 -km shigure -j 32`
