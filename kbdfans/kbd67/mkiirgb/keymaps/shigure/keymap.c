@@ -68,6 +68,7 @@ void sft_reset(qk_tap_dance_state_t *state, void *user_data);
 #define TSK_MGR C(S(KC_ESC))
 #define CTL_APP CTL_T(KC_APP)
 #define SERACH G(S(KC_N))
+#define SFT_DEL S(KC_DEL)
 
 enum {
       _L0 = 0,
@@ -104,10 +105,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       _______, _______,  _______, KC_CALC, _______, _______, SERACH,  TSK_MGR, _______, _______, _______,            _______,  _______,   _______,
                                       _______, _______,  _______,                   KC_DEL,                    _______,          CTL_APP,            _______,  _______,   _______),
     [_L2] = LAYOUT_65_ansi_blocker( /* Numpad */
-                                      KC_GRV,  _______,  _______, _______, _______, _______, _______, KC_P7,   KC_P8,   KC_P9,   _______,  KC_PMNS,  KC_PPLS,  _______,   KC_SLEP,
+                                      KC_GRV,  _______,  _______, _______, _______, _______, _______, KC_P7,   KC_P8,   KC_P9,   _______,  KC_PMNS,  KC_PPLS,  SFT_DEL,   KC_SLEP,
                                       _______, KC_HOME,  KC_UP,   KC_END,  KC_PGUP, _______, _______, KC_P4,   KC_P5,   KC_P6,   _______,  KC_PAST,  KC_PSLS,  _______,   _______,
                                       _______, KC_LEFT,  KC_DOWN, KC_RGHT, KC_PGDN, _______, _______, KC_P1,   KC_P2,   KC_P3,   _______,  _______,            _______,   _______,
-                                      _______, _______,  _______, KC_CALC, _______, _______, _______, KC_P0,   KC_P0,   KC_PDOT, KC_NUM,            _______,  _______,   _______,
+                                      _______, _______,  _______, KC_CALC, _______, _______, _______, KC_P0,   KC_P0,   KC_PDOT, KC_NUM,             _______,  _______,   _______,
                                       _______, GUI_TOG,  _______,                   _______,                   _______,          _______,            _______,  _______,   _______),
     [_L3] = LAYOUT_65_ansi_blocker( /* Media and RGB */
                                       RGB_TOG, RGB_M_P,  _______, _______, NK_TOGG, KC_VOLD, KC_VOLU, KC_MPLY, KC_MUTE, _______, _______,  _______,  _______,  _______,   RGB_SAI,

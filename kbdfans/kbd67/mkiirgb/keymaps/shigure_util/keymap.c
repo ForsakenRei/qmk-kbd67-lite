@@ -15,14 +15,8 @@
 
 #include QMK_KEYBOARD_H
 
-void keyboard_post_init_user(void) {
-  #ifdef RGB_MATRIX_ENABLE
-       rgb_matrix_sethsv(0, 0, 0); // set default RGB color
-  #endif 
-  if (IS_HOST_LED_ON(USB_LED_NUM_LOCK))
-  { // turn on Num lock by defautl
-    tap_code(KC_NUM);
-  }
+void matrix_init_user(void) {
+  rgb_matrix_sethsv(0, 0, 0); // set default RGB color
 };
 
 enum custom_keycodes
@@ -73,19 +67,17 @@ void sft_reset(qk_tap_dance_state_t *state, void *user_data);
 #define DC_MUTE C(S(KC_M)) // used for mute/unmute
 #define TSK_MGR C(S(KC_ESC))
 #define CTL_APP CTL_T(KC_APP)
-#define SEARCH G(S(KC_N))
+#define SERACH G(S(KC_N))
 #define SFT_DEL S(KC_DEL)
 
-enum
-{
-  _L0 = 0,
-  _L1,
-  _L2,
-  _L3,
-  _L4,
+enum {
+      _L0 = 0,
+      _L1,
+      _L2,
+      _L3,
 };
 
-/* 
+	/* 
   * ,--------------------------------------------------------------------------------------------------.
   * | Esc |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  0  |  -  |  =  |  Backspace  | `    |
   * |-------------------------------------------------------------------------------------------+------+
@@ -101,36 +93,30 @@ enum
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_L0] = LAYOUT_65_ansi_blocker( /* Base Layer */
-                                      QK_GESC, KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,   KC_HOME,
+                                      QK_GESC, KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,   KC_DEL,
                                       KC_TAB,  KC_Q,     KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS,   KC_PGUP,
                                       CAP_LYR, KC_A,     KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,            KC_ENT,    KC_PGDN,
-                                      KC_LSFT, KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,            RSFT_L3,  KC_UP,     KC_END,
+                                      KC_LSFT, KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,            KC_RSFT,  KC_UP,     RSFT_L3,
                                       KC_LCTL, KC_LGUI,  KC_LALT,                   KC_SPC,                    FN_L2,            KC_RCTL,            KC_LEFT,  KC_DOWN,   KC_RGHT),
     [_L1] = LAYOUT_65_ansi_blocker( /* FN */
                                       KC_GRV,  KC_F1,    KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,   KC_F12,   KC_DEL,    KC_INS,
                                       _______, KC_HOME,  KC_UP,   KC_END,  KC_PGUP, _______, _______, _______, _______, _______, _______,  _______,  _______,  _______,   KC_PSCR,
                                       _______, KC_LEFT,  KC_DOWN, KC_RGHT, KC_PGDN, _______, _______, _______, _______, _______, _______,  _______,            _______,   _______,
-                                      _______, _______,  _______, KC_CALC, _______, _______, SEARCH,  TSK_MGR, _______, _______, _______,            _______,  _______,   _______,
+                                      _______, _______,  _______, KC_CALC, _______, _______, SERACH,  TSK_MGR, _______, _______, _______,            _______,  _______,   _______,
                                       _______, _______,  _______,                   KC_DEL,                    _______,          CTL_APP,            _______,  _______,   _______),
     [_L2] = LAYOUT_65_ansi_blocker( /* Numpad */
                                       KC_GRV,  _______,  _______, _______, _______, _______, _______, KC_P7,   KC_P8,   KC_P9,   _______,  KC_PMNS,  KC_PPLS,  SFT_DEL,   KC_SLEP,
                                       _______, KC_HOME,  KC_UP,   KC_END,  KC_PGUP, _______, _______, KC_P4,   KC_P5,   KC_P6,   _______,  KC_PAST,  KC_PSLS,  _______,   _______,
                                       _______, KC_LEFT,  KC_DOWN, KC_RGHT, KC_PGDN, _______, _______, KC_P1,   KC_P2,   KC_P3,   _______,  _______,            _______,   _______,
-                                      _______, _______,  _______, KC_CALC, _______, _______, _______, KC_P0,   KC_P0,   KC_PDOT, KC_NUM,             _______,  _______,   _______,
+                                      _______, _______,  _______, KC_CALC, _______, _______, _______, KC_P0,   KC_P0,   KC_PDOT, KC_NUM,            _______,  _______,   _______,
                                       _______, GUI_TOG,  _______,                   _______,                   _______,          _______,            _______,  _______,   _______),
     [_L3] = LAYOUT_65_ansi_blocker( /* Media and RGB */
                                       RGB_TOG, RGB_M_P,  _______, _______, NK_TOGG, KC_VOLD, KC_VOLU, KC_MPLY, KC_MUTE, _______, _______,  _______,  _______,  _______,   RGB_SAI,
                                       _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______,  QK_BOOT,   RGB_SAD,
                                       _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,            EE_CLR,    RGB_HUI,
                                       _______, _______,  _______, _______, _______, _______, _______, DC_MUTE, _______, _______, _______,            _______,  RGB_MOD,   RGB_HUD,
-                                      _______, _______,  _______,                   _______,                   TO(0),            TO(4),              RGB_VAD,  RGB_RMOD,  RGB_VAI),
-	  [_L4] = LAYOUT_65_ansi_blocker( /* Gaming */
-                                      QK_GESC, KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,   KC_MUTE,
-                                      KC_TAB,  KC_Q,     KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS,   KC_F13,
-                                      KC_CAPS, KC_A,     KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,            KC_ENT,    KC_F14,
-                                      KC_LSFT, KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,            KC_RSFT,  KC_UP,     KC_LGUI,
-                                      KC_LCTL, KC_NO,    KC_LALT,                   KC_SPC,                    TO(0),            KC_RCTL,            KC_LEFT,  KC_DOWN,   KC_RGHT)                                     
-}; 
+                                      _______, _______,  _______,                   _______,                   TO(0),            _______,            RGB_VAD,  RGB_RMOD,  RGB_VAI)                                     
+};
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
 {
@@ -148,25 +134,19 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
     break;
   case _L1:
     {
-      rgb_matrix_set_color(61, 0xaa, 0xcc, 0x11);
+      rgb_matrix_set_color_all(0xaa, 0xcc, 0x11);
     }
     break;
   case _L2:
     {
-      rgb_matrix_set_color(61, 0xff, 0x99, 0x00);
+      rgb_matrix_set_color_all(0xff, 0x99, 0x00);
     }
     break;
   case _L3:
     {
-      rgb_matrix_set_color(61, 0xee, 0x00, 0x77);
+      rgb_matrix_set_color_all(0xee, 0x00, 0x77);
     }
     break;
-  case _L4:
-	{
-      rgb_matrix_set_color(59, 0xee, 0x33, 0x33);	  
-      rgb_matrix_set_color(61, 0xee, 0x33, 0x33);
-	}
-	break;
   default:
     break;
   }
@@ -328,6 +308,14 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [KCFN_L2] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fn_finished, fn_reset),
     [RSFT_LAY3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, sft_finished, sft_reset)
 };
+
+void keyboard_post_init_user(void)
+{
+  if (IS_HOST_LED_ON(USB_LED_NUM_LOCK))
+  { // turn on Num lock by defautl
+    tap_code(KC_NUM);
+  }
+}
 
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
 
