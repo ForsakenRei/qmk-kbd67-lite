@@ -51,15 +51,15 @@ enum custom_tap_dance
 // Declare the functions to be used with your tap dance key(s)
 
 // Function associated with all tap dances
-td_state_t cur_dance(qk_tap_dance_state_t *state);
+td_state_t cur_dance(tap_dance_state_t *state);
 
 // Functions associated with individual tap dances
-void caps_finished(qk_tap_dance_state_t *state, void *user_data);
-void caps_reset(qk_tap_dance_state_t *state, void *user_data);
-void fn_finished(qk_tap_dance_state_t *state, void *user_data);
-void fn_reset(qk_tap_dance_state_t *state, void *user_data);
-void sft_finished(qk_tap_dance_state_t *state, void *user_data);
-void sft_reset(qk_tap_dance_state_t *state, void *user_data);
+void caps_finished(tap_dance_state_t *state, void *user_data);
+void caps_reset(tap_dance_state_t *state, void *user_data);
+void fn_finished(tap_dance_state_t *state, void *user_data);
+void fn_reset(tap_dance_state_t *state, void *user_data);
+void sft_finished(tap_dance_state_t *state, void *user_data);
+void sft_reset(tap_dance_state_t *state, void *user_data);
 
 #define CAP_LYR TD(CAPS_LAYR)
 #define FN_L2   TD(KCFN_L2)
@@ -118,6 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       _______, _______,  _______,                   _______,                   TO(0),            _______,            RGB_VAD,  RGB_RMOD,  RGB_VAI)                                     
 };
 
+// RGB layer indicator
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
 {
   switch (get_highest_layer(layer_state))
@@ -154,7 +155,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
 }
 
 // Determine the current tap dance state
-td_state_t cur_dance(qk_tap_dance_state_t *state)
+td_state_t cur_dance(tap_dance_state_t *state)
 {
   if (state->count == 1)
   {
@@ -183,7 +184,7 @@ static td_tap_t sft_tap_state = {
     .state = TD_NONE};
 
 // Functions that control what our tap dance key does
-void caps_finished(qk_tap_dance_state_t *state, void *user_data)
+void caps_finished(tap_dance_state_t *state, void *user_data)
 {
   caps_tap_state.state = cur_dance(state);
   switch (caps_tap_state.state)
@@ -212,7 +213,7 @@ void caps_finished(qk_tap_dance_state_t *state, void *user_data)
   }
 };
 
-void caps_reset(qk_tap_dance_state_t *state, void *user_data)
+void caps_reset(tap_dance_state_t *state, void *user_data)
 {
   // If the key was held down and now is released then switch off the layer
   if (caps_tap_state.state == TD_SINGLE_HOLD)
@@ -222,8 +223,8 @@ void caps_reset(qk_tap_dance_state_t *state, void *user_data)
   caps_tap_state.state = TD_NONE;
 };
 
-//tap dance for Fn
-void fn_finished(qk_tap_dance_state_t *state, void*user_data)
+// Tap dance for Fn
+void fn_finished(tap_dance_state_t *state, void*user_data)
 {
   fn_tap_state.state = cur_dance(state);
   switch (fn_tap_state.state)
@@ -249,7 +250,7 @@ void fn_finished(qk_tap_dance_state_t *state, void*user_data)
   }
 };
 
-void fn_reset(qk_tap_dance_state_t *state, void*user_data)
+void fn_reset(tap_dance_state_t *state, void*user_data)
 {
   switch (fn_tap_state.state) 
   {
@@ -261,7 +262,8 @@ void fn_reset(qk_tap_dance_state_t *state, void*user_data)
   }
 };
 
-void sft_finished(qk_tap_dance_state_t *state, void*user_data)
+// Tap dance for right shift
+void sft_finished(tap_dance_state_t *state, void*user_data)
 {
   sft_tap_state.state = cur_dance(state);
   switch (sft_tap_state.state)
@@ -288,7 +290,7 @@ void sft_finished(qk_tap_dance_state_t *state, void*user_data)
   }
 };
 
-void sft_reset(qk_tap_dance_state_t *state, void*user_data)
+void sft_reset(tap_dance_state_t *state, void*user_data)
 {
   switch (sft_tap_state.state) 
   {
@@ -303,7 +305,7 @@ void sft_reset(qk_tap_dance_state_t *state, void*user_data)
 };
 
 // Associate tap dance key with its functionality
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
     [CAPS_LAYR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_finished, caps_reset),
     [KCFN_L2] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fn_finished, fn_reset),
     [RSFT_LAY3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, sft_finished, sft_reset)
@@ -317,10 +319,15 @@ void keyboard_post_init_user(void)
   }
 }
 
+// Key override
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
+const key_override_t alt_f12_override = ko_make_basic(MOD_BIT(KC_RCTL), KC_EQL, A(KC_F12));
+const key_override_t shift_f12_override = ko_make_basic(MOD_BIT(KC_RCTL), KC_MINS, S(KC_F12));
 
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
     &delete_key_override,
+    &alt_f12_override,
+    &shift_f12_override,
     NULL // Null terminate the array of overrides!
 };
