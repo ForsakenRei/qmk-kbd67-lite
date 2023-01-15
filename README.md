@@ -10,7 +10,7 @@
 ### Or use QMK CLI to flash
 `qmk compile -kb kbdfans/kbd67/mkiirgb/v2 -km shigure -j 32`
 
-`qmk flash -kb kbdfans/kbd67/mikkrgb/v2 -km shigure -j 32`
+`qmk flash -kb kbdfans/kbd67/mkiirgb/v2 -km shigure -j 32`
 
 ## V3 PCB Flash Guide
 
