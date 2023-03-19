@@ -124,7 +124,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
   switch (get_highest_layer(layer_state))
   {
   case _L0:
-    if (IS_HOST_LED_ON(USB_LED_CAPS_LOCK))
+    if (host_keyboard_led_state().caps_lock)
     {
         rgb_matrix_set_color(61, 0x00, 0x66, 0xbb);
       }
@@ -135,17 +135,17 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
     break;
   case _L1:
     {
-      rgb_matrix_set_color_all(0xaa, 0xcc, 0x11);
+      rgb_matrix_set_color(61, 0xaa, 0xcc, 0x11);
     }
     break;
   case _L2:
     {
-      rgb_matrix_set_color_all(0xff, 0x99, 0x00);
+      rgb_matrix_set_color(61, 0xff, 0x99, 0x00);
     }
     break;
   case _L3:
     {
-      rgb_matrix_set_color_all(0xee, 0x00, 0x77);
+      rgb_matrix_set_color(61, 0xee, 0x00, 0x77);
     }
     break;
   default:
@@ -310,14 +310,6 @@ tap_dance_action_t tap_dance_actions[] = {
     [KCFN_L2] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fn_finished, fn_reset),
     [RSFT_LAY3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, sft_finished, sft_reset)
 };
-
-void keyboard_post_init_user(void)
-{
-  if (IS_HOST_LED_ON(USB_LED_NUM_LOCK))
-  { // turn on Num lock by defautl
-    tap_code(KC_NUM);
-  }
-}
 
 // Key override
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
