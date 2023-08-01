@@ -15,10 +15,11 @@
 
 #include QMK_KEYBOARD_H
 
-void keyboard_post_init_user(void) {
-  #ifdef RGB_MATRIX_ENABLE
-       rgb_matrix_sethsv(0, 0, 0); // set default RGB color
-  #endif 
+void keyboard_post_init_user(void)
+{
+#ifdef RGB_MATRIX_ENABLE
+  rgb_matrix_sethsv(0, 0, 0); // set default RGB color
+#endif
 };
 
 enum custom_keycodes
@@ -48,6 +49,8 @@ enum custom_tap_dance
   CAPS_LAYR,
   RSFT_LAY3,
   KCFN_L2,
+  HOME_PAGEUP,
+  END_PAGEDOWN,
 };
 
 // Declare the functions to be used with your tap dance key(s)
@@ -64,13 +67,15 @@ void sft_finished(tap_dance_state_t *state, void *user_data);
 void sft_reset(tap_dance_state_t *state, void *user_data);
 
 #define CAP_LYR TD(CAPS_LAYR)
-#define FN_L2   TD(KCFN_L2)
+#define FN_L2 TD(KCFN_L2)
 #define RSFT_L3 TD(RSFT_LAY3)
 #define DC_MUTE C(S(KC_M)) // used for mute/unmute
 #define TSK_MGR C(S(KC_ESC))
 #define CTL_APP CTL_T(KC_APP)
 #define SEARCH G(S(KC_N))
 #define SFT_DEL S(KC_DEL)
+#define HOME_PU TD(HOME_PAGEUP)
+#define END_PD TD(END_PAGEDOWN)
 
 enum
 {
@@ -97,10 +102,10 @@ enum
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_L0] = LAYOUT_65_ansi_blocker( /* Base Layer */
-                                      QK_GESC, KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,   KC_HOME,
-                                      KC_TAB,  KC_Q,     KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS,   KC_PGUP,
-                                      CAP_LYR, KC_A,     KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,            KC_ENT,    KC_PGDN,
-                                      KC_LSFT, KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,            RSFT_L3,  KC_UP,     KC_END,
+                                      QK_GESC, KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,   KC_DEL,
+                                      KC_TAB,  KC_Q,     KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS,   HOME_PU,
+                                      CAP_LYR, KC_A,     KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,            KC_ENT,    END_PD,
+                                      KC_LSFT, KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,            KC_RSFT,  KC_UP,     RSFT_L3,
                                       KC_LCTL, KC_LGUI,  KC_LALT,                   KC_SPC,                    FN_L2,            KC_RCTL,            KC_LEFT,  KC_DOWN,   KC_RGHT),
     [_L1] = LAYOUT_65_ansi_blocker( /* FN */
                                       KC_GRV,  KC_F1,    KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,   KC_F12,   KC_DEL,    KC_INS,
@@ -126,8 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       KC_CAPS, KC_A,     KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,            KC_ENT,    KC_F14,
                                       KC_LSFT, KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,            KC_RSFT,  KC_UP,     KC_LGUI,
                                       KC_LCTL, KC_NO,    KC_LALT,                   KC_SPC,                    TO(0),            KC_RCTL,            KC_LEFT,  KC_DOWN,   KC_RGHT)                                     
-}; 
-
+};
 
 // RGB layer indicator
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
@@ -137,34 +141,34 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
   case _L0:
     if (host_keyboard_led_state().caps_lock)
     {
-        rgb_matrix_set_color(61, 0x00, 0x66, 0xbb);
-      }
+      rgb_matrix_set_color(61, 0x00, 0x66, 0xbb);
+    }
     else
     {
       rgb_matrix_sethsv(0, 0, 0);
     }
     break;
   case _L1:
-    {
-      rgb_matrix_set_color(61, 0xaa, 0xcc, 0x11);
-    }
-    break;
+  {
+    rgb_matrix_set_color(61, 0xaa, 0xcc, 0x11);
+  }
+  break;
   case _L2:
-    {
-      rgb_matrix_set_color(61, 0xff, 0x99, 0x00);
-    }
-    break;
+  {
+    rgb_matrix_set_color(61, 0xff, 0x99, 0x00);
+  }
+  break;
   case _L3:
-    {
-      rgb_matrix_set_color(61, 0xee, 0x00, 0x77);
-    }
-    break;
+  {
+    rgb_matrix_set_color(61, 0xee, 0x00, 0x77);
+  }
+  break;
   case _L4:
-	{
-      rgb_matrix_set_color(59, 0xee, 0x33, 0x33);	  
-      rgb_matrix_set_color(61, 0xee, 0x33, 0x33);
-	}
-	break;
+  {
+    rgb_matrix_set_color(59, 0xee, 0x33, 0x33);
+    rgb_matrix_set_color(61, 0xee, 0x33, 0x33);
+  }
+  break;
   default:
     break;
   }
@@ -241,19 +245,20 @@ void caps_reset(tap_dance_state_t *state, void *user_data)
 };
 
 // Tap dance for Fn
-void fn_finished(tap_dance_state_t *state, void*user_data)
+void fn_finished(tap_dance_state_t *state, void *user_data)
 {
   fn_tap_state.state = cur_dance(state);
   switch (fn_tap_state.state)
   {
-    case TD_SINGLE_TAP:
-      set_oneshot_layer(_L2, ONESHOT_START); clear_oneshot_layer_state(ONESHOT_PRESSED);
-      break;
-    case TD_SINGLE_HOLD:
-      layer_on(_L2);
-      break;
-    case TD_DOUBLE_TAP:
-      if (layer_state_is(_L2))
+  case TD_SINGLE_TAP:
+    set_oneshot_layer(_L2, ONESHOT_START);
+    clear_oneshot_layer_state(ONESHOT_PRESSED);
+    break;
+  case TD_SINGLE_HOLD:
+    layer_on(_L2);
+    break;
+  case TD_DOUBLE_TAP:
+    if (layer_state_is(_L2))
     {
       layer_off(_L2);
     }
@@ -261,39 +266,40 @@ void fn_finished(tap_dance_state_t *state, void*user_data)
     {
       layer_on(_L2);
     }
-      break;
-    default:
-      break;
+    break;
+  default:
+    break;
   }
 };
 
-void fn_reset(tap_dance_state_t *state, void*user_data)
+void fn_reset(tap_dance_state_t *state, void *user_data)
 {
-  switch (fn_tap_state.state) 
+  switch (fn_tap_state.state)
   {
-    case TD_SINGLE_HOLD:
-      layer_off(_L2);
-      break;
-    default:
-      break;
+  case TD_SINGLE_HOLD:
+    layer_off(_L2);
+    break;
+  default:
+    break;
   }
 };
 
 // Tap dance for right shift
-void sft_finished(tap_dance_state_t *state, void*user_data)
+void sft_finished(tap_dance_state_t *state, void *user_data)
 {
   sft_tap_state.state = cur_dance(state);
   switch (sft_tap_state.state)
   {
-    case TD_SINGLE_TAP:
-      // register_code(KC_RSFT);
-      set_oneshot_layer(_L3, ONESHOT_START); clear_oneshot_layer_state(ONESHOT_PRESSED);
-      break;
-    case TD_SINGLE_HOLD:
-      register_code(KC_RSFT);
-      break;
-    case TD_DOUBLE_TAP:
-      if (layer_state_is(_L3))
+  case TD_SINGLE_TAP:
+    // register_code(KC_RSFT);
+    set_oneshot_layer(_L3, ONESHOT_START);
+    clear_oneshot_layer_state(ONESHOT_PRESSED);
+    break;
+  case TD_SINGLE_HOLD:
+    layer_on(_L3);
+    break;
+  case TD_DOUBLE_TAP:
+    if (layer_state_is(_L3))
     {
       layer_off(_L3);
     }
@@ -301,23 +307,23 @@ void sft_finished(tap_dance_state_t *state, void*user_data)
     {
       layer_on(_L3);
     }
-      break;
-    default:
-      break;
+    break;
+  default:
+    break;
   }
 };
 
-void sft_reset(tap_dance_state_t *state, void*user_data)
+void sft_reset(tap_dance_state_t *state, void *user_data)
 {
-  switch (sft_tap_state.state) 
+  switch (sft_tap_state.state)
   {
-    // case TD_SINGLE_TAP:
-    //   unregister_code(KC_RSFT);
-    case TD_SINGLE_HOLD:
-      unregister_code(KC_RSFT);
-      break;
-    default:
-      break;
+  // case TD_SINGLE_TAP:
+  //   unregister_code(KC_RSFT);
+  case TD_SINGLE_HOLD:
+    layer_off(_L3);
+    break;
+  default:
+    break;
   }
 };
 
@@ -325,7 +331,9 @@ void sft_reset(tap_dance_state_t *state, void*user_data)
 tap_dance_action_t tap_dance_actions[] = {
     [CAPS_LAYR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_finished, caps_reset),
     [KCFN_L2] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fn_finished, fn_reset),
-    [RSFT_LAY3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, sft_finished, sft_reset)
+    [RSFT_LAY3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, sft_finished, sft_reset),
+    [HOME_PAGEUP] = ACTION_TAP_DANCE_DOUBLE(KC_PGUP, KC_HOME),
+    [END_PAGEDOWN] = ACTION_TAP_DANCE_DOUBLE(KC_PGDN, KC_END),
 };
 
 // Key override
