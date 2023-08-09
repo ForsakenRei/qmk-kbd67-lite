@@ -70,6 +70,8 @@ void sft_reset(tap_dance_state_t *state, void *user_data);
 #define CTL_APP CTL_T(KC_APP)
 #define SERACH G(S(KC_N))
 #define SFT_DEL S(KC_DEL)
+#define HOME_PU TD(HOME_PAGEUP)
+#define END_PD TD(END_PAGEDOWN)
 
 enum
 {
@@ -96,8 +98,8 @@ enum
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_L0] = LAYOUT_65_ansi_blocker( /* Base Layer */
                                       QK_GESC, KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,   KC_DEL,
-                                      KC_TAB,  KC_Q,     KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS,   KC_PGUP,
-                                      CAP_LYR, KC_A,     KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,            KC_ENT,    KC_PGDN,
+                                      KC_TAB,  KC_Q,     KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS,   HOME_PU,
+                                      CAP_LYR, KC_A,     KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,            KC_ENT,    END_PD,
                                       KC_LSFT, KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,            KC_RSFT,  KC_UP,     RSFT_L3,
                                       KC_LCTL, KC_LGUI,  KC_LALT,                   KC_SPC,                    FN_L2,            KC_RCTL,            KC_LEFT,  KC_DOWN,   KC_RGHT),
     [_L1] = LAYOUT_65_ansi_blocker( /* FN */
@@ -312,7 +314,9 @@ void sft_reset(tap_dance_state_t *state, void *user_data)
 tap_dance_action_t tap_dance_actions[] = {
     [CAPS_LAYR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_finished, caps_reset),
     [KCFN_L2] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fn_finished, fn_reset),
-    [RSFT_LAY3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, sft_finished, sft_reset)};
+    [RSFT_LAY3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, sft_finished, sft_reset),
+    [HOME_PAGEUP] = ACTION_TAP_DANCE_DOUBLE(KC_PGUP, KC_HOME),
+    [END_PAGEDOWN] = ACTION_TAP_DANCE_DOUBLE(KC_PGDN, KC_END),};
 
 // Key override
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
