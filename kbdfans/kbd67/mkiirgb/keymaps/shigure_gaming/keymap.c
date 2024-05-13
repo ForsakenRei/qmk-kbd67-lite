@@ -118,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       _______, KC_HOME,  KC_UP,   KC_END,  KC_PGUP, _______, _______, KC_P4,   KC_P5,   KC_P6,   _______,  KC_PAST,  KC_PSLS,  _______,   _______,
                                       _______, KC_LEFT,  KC_DOWN, KC_RGHT, KC_PGDN, _______, _______, KC_P1,   KC_P2,   KC_P3,   _______,  _______,            _______,   _______,
                                       _______, _______,  _______, KC_CALC, _______, _______, _______, KC_P0,   KC_P0,   KC_PDOT, KC_NUM,             _______,  _______,   _______,
-                                      _______, GUI_TOG,  _______,                   _______,                   _______,          _______,            _______,  _______,   _______),
+                                      _______, GU_TOGG,  _______,                   _______,                   _______,          _______,            _______,  _______,   _______),
     [_L3] = LAYOUT_65_ansi_blocker( /* Media and RGB */
                                       RGB_TOG, RGB_M_P,  _______, _______, NK_TOGG, KC_VOLD, KC_VOLU, KC_MPLY, KC_MUTE, _______, _______,  _______,  _______,  _______,   RGB_SAI,
                                       _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______,  QK_BOOT,   RGB_SAD,
@@ -141,7 +141,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
   case _L0:
     if (host_keyboard_led_state().caps_lock)
     {
-      rgb_matrix_set_color(61, 0x00, 0x66, 0xbb);
+      rgb_matrix_set_color(61, RGB_CYAN);
     }
     else
     {
@@ -150,17 +150,17 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
     break;
   case _L1:
   {
-    rgb_matrix_set_color(61, 0xaa, 0xcc, 0x11);
+    rgb_matrix_set_color(61, RGB_GOLDENROD);
   }
   break;
   case _L2:
   {
-    rgb_matrix_set_color(61, 0xff, 0x99, 0x00);
+    rgb_matrix_set_color(61, RGB_CHARTREUSE);
   }
   break;
   case _L3:
   {
-    rgb_matrix_set_color(61, 0xee, 0x00, 0x77);
+    rgb_matrix_set_color(61, RGB_CORAL);
   }
   break;
   case _L4:
