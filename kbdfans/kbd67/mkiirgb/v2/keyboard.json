@@ -19,7 +19,7 @@
             "cycle_out_in": false,
             "cycle_out_in_dual": false,
             "cycle_pinwheel": false,
-            "cycle_spiral": false,
+            "cycle_spiral": true,
             "dual_beacon": false,
             "rainbow_beacon": false,
             "rainbow_pinwheels": false,
@@ -32,7 +32,7 @@
             "typing_heatmap": false
         },
         "default": {
-            "animation": "cycle_all"
+            "animation": "cycle_spiral"
         },
         "driver": "is31fl3731",
         "led_flush_limit": 26,
