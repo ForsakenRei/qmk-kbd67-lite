@@ -3,7 +3,7 @@
 
 ## V2 PCB Flash Guide
 
-1. Hold `ESC` and plug the board in
+1. Hold `ESC` and plug the board in, or press `\` on layer 3.
 2. Clear EEPROM in QMK Toolbox
 3. Flash the firmware
 
