@@ -20,11 +20,8 @@
 
 /*  Handle GRAVESC combo keys */
 // #define GRAVE_ESC_ALT_OVERRIDE
-    //Always send Escape if Alt is pressed
-#define GRAVE_ESC_CTRL_OVERRIDE
-    //Always send Escape if Control is pressed
 //#define GRAVE_ESC_SHIFT_OVERRIDE
-    //Always send Escape if Shift is pressed
+#define GRAVE_ESC_CTRL_OVERRIDE
 
 // tap vs hold time difference
 #define TAPPING_TERM 200
