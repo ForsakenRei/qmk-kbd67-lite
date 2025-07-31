@@ -120,15 +120,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_L2] = LAYOUT_65_ansi_blocker( /* Numpad */
                                       KC_GRV,  KC_1,     KC_2,    KC_3,    _______, _______, _______, _______, _______, _______, _______,  _______,  _______,  SFT_DEL,   KC_SLEP,
                                       _______, KC_4,     KC_5,    KC_6,    KC_PGUP, _______, _______, _______, _______, _______, _______,  _______,  _______,  _______,   _______,
-                                      _______, KC_7,     KC_8,    KC_9,    KC_PGDN, _______, VD_LEFT, SCR_LFT, SCR_RHT, VD_RGHT, _______,  _______,            _______,   _______,
+                                      _______, KC_7,     KC_8,    KC_9,    KC_PGDN, _______, _______, _______, _______, _______, _______,  _______,            _______,   _______,
                                       _______, KC_0,     _______, KC_CALC, _______, _______, _______, TSK_MGR, _______, _______, _______,            _______,  KC_BSPC,   _______,
-                                      _______, GU_TOGG,  _______,                   _______,                   _______,          _______,            KC_WBAK,  KC_F5,     KC_WFWD),
+                                      _______, GU_TOGG,  _______,                   KC_DEL,                    _______,          _______,            KC_WBAK,  KC_F5,     KC_WFWD),
     [_L3] = LAYOUT_65_ansi_blocker( /* Media and RGB */
-                                      RGB_TOG, RGB_M_P,  _______, _______, NK_TOGG, KC_VOLD, KC_VOLU, KC_MPLY, KC_MUTE, _______, _______,  _______,  _______,  _______,   RGB_SAI,
-                                      _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______,  QK_BOOT,   RGB_SAD,
-                                      _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,            EE_CLR,    RGB_HUI,
-                                      _______, _______,  _______, _______, _______, _______, _______, DC_MUTE, _______, _______, _______,            QK_RBT,   RGB_MOD,   RGB_HUD,
-                                      _______, _______,  _______,                   _______,                   TO(0),            TO(4),              RGB_VAD,  RGB_RMOD,  RGB_VAI),
+                                      RM_TOGG, KC_MUTE,  KC_VOLD, KC_VOLU, KC_MPRV, KC_MPLY, KC_MNXT, _______, _______, _______, _______,  KC_F13,   KC_F14,   _______,   RM_SATU,
+                                      _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______,  QK_BOOT,   RM_SATD,
+                                      _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,            EE_CLR,    RM_HUEU,
+                                      _______, _______,  _______, _______, _______, _______, _______, DC_MUTE, _______, _______, _______,            QK_RBT,   RM_NEXT,   RM_HUED,
+                                      _______, _______,  _______,                   _______,                   TO(0),            TO(4),              RM_VALD,  RM_PREV,   RM_VALU),
 	  [_L4] = LAYOUT_65_ansi_blocker( /* Gaming */
                                       QK_GESC, KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,   KC_MUTE,
                                       KC_TAB,  KC_Q,     KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS,   KC_F13,
@@ -145,7 +145,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
   case _L0:
     if (host_keyboard_led_state().caps_lock)
     {
-      rgb_matrix_set_color(61, RGB_CYAN);
+      rgb_matrix_set_color(61, RGB_WHITE);
     }
     else
     {
