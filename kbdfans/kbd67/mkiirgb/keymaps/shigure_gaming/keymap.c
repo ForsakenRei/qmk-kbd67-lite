@@ -122,7 +122,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       _______, KC_4,     KC_5,    KC_6,    KC_PGUP, _______, _______, _______, _______, _______, _______,  _______,  _______,  _______,   _______,
                                       _______, KC_7,     KC_8,    KC_9,    KC_PGDN, _______, _______, _______, _______, _______, _______,  _______,            _______,   _______,
                                       _______, KC_0,     _______, KC_CALC, _______, _______, _______, TSK_MGR, _______, _______, _______,            _______,  KC_BSPC,   _______,
-                                      _______, GU_TOGG,  _______,                   _______,                   _______,          _______,            KC_WBAK,  KC_F5,     KC_WFWD),
+                                      _______, GU_TOGG,  _______,                   KC_DEL,                    _______,          _______,            KC_WBAK,  KC_F5,     KC_WFWD),
     [_L3] = LAYOUT_65_ansi_blocker( /* Media and RGB */
                                       RGB_TOG, KC_MUTE,  KC_VOLD, KC_VOLU, KC_MPRV, KC_MPLY, KC_MNXT, _______, _______, _______, _______,  KC_F13,   KC_F14,   _______,   RGB_SAI,
                                       _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______,  QK_BOOT,   RGB_SAD,
@@ -145,7 +145,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
   case _L0:
     if (host_keyboard_led_state().caps_lock)
     {
-      rgb_matrix_set_color(61, RGB_CYAN);
+      rgb_matrix_set_color(61, RGB_WHITE);
     }
     else
     {
